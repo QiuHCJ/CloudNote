@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="cloud_note1"
+  id="myeclipse.1441072301828"
+  context-root="/cloud_note1"
+  j2ee-spec="5.0"
+  archive="cloud_note1.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

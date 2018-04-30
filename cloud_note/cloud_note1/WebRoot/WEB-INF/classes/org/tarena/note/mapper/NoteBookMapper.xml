@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tarena.note.dao.NoteBookDao">
+	
+	<!-- 查找所有的NOteBook -->
+	<select id="findAll" parameterType="string" resultType="NoteBook">
+		select * from cn_notebook where cn_user_id = #{cn_user_id}
+	</select>
+	
+	<!-- 根据笔记本名查找Id -->
+	<select id="findNameByIdAndName" parameterType="map" resultType="string">
+		select distinct cn_notebook_id 
+		from cn_notebook
+		where cn_notebook_name = #{cn_notebook_name} and
+			  cn_user_id = #{cn_user_id}
+			 
+	</select>
+	
+	<!-- 
+		`cn_notebook_id` varchar(100) NOT NULL COMMENT '笔记本ID',
+	    `cn_user_id` varchar(100) DEFAULT NULL COMMENT '用户ID',
+	    `cn_notebook_type_id` varchar(100) DEFAULT NULL COMMENT '笔记本类型ID',
+	    `cn_notebook_name` varchar(500) DEFAULT NULL COMMENT '笔记本名',
+	    `cn_notebook_desc` text COMMENT '笔记本说明',
+	    `cn_notebook_createtime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+	
+	 -->
+	
+	
+	<!-- 添加笔记本 -->
+	<insert id="saveNote" parameterType="NoteBook">
+		
+		insert into cn_notebook
+		values(
+			 #{cn_notebook_id},
+			 #{cn_user_id},
+			 #{cn_notebook_type_id},
+			 #{cn_notebook_name},
+			 #{cn_notebook_desc},
+			 #{cn_notebook_createtime}
+			 )
+	</insert>
+	
+	<!-- 根据Id删除一条笔记本 -->
+	<delete id="deleteById" parameterType="string">
+		delete from cn_notebook
+		where cn_notebook_id = #{cn_notebook_id}
+	</delete>
+	
+	<!-- 根据id重名笔记本 -->
+	<update id="updateName" parameterType="map" >
+		update cn_notebook
+		set cn_notebook_name = #{cn_notebook_name}
+		where cn_notebook_id = #{cn_notebook_id}
+	</update>
+	
+</mapper>

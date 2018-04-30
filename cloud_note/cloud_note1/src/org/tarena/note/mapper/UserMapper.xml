@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tarena.note.dao.UserDao">
+
+	<!-- 根据用户名查找用户 -->
+	<select id="findByName" parameterType="string" resultType="User">
+		select * from cn_user
+		where cn_user_name = #{cn_user_name}
+	</select>
+	
+	<!-- 更具ID查找用户 -->
+	<select id="fingdById" parameterType="string" resultType="User">
+		select * from cn_user
+		where cn_user_id = #{cn_user_id}
+	</select>
+	 
+	 <!-- 插入一条用户数据 -->
+	 <insert id="save" parameterType="User" >
+	 	insert into cn_user 
+	 	values (#{cn_user_id},#{cn_user_name},#{cn_user_password},#{cn_user_token},#{cn_user_desc})
+	 </insert>
+	 
+	 <!-- 跟新cn_user_token的值 -->
+	 <update id="setUserTokenByUser" parameterType="User" >
+	 	update cn_user 
+	 	set cn_user_token = #{cn_user_token}
+	 	where cn_user_id = #{cn_user_id}
+	 </update>
+	 
+	 <!-- 更改密码 -->
+	 <update id="changePassword" parameterType="User" >
+	 	update cn_user
+	 	set cn_user_password = #{cn_user_password}
+	 	where cn_user_id = #{cn_user_id}
+	 </update>
+</mapper>

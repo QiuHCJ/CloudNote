@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tarena.note.dao.NoteDao">
+
+	<!-- 根据cn_notebook_id查找Note -->
+	<select id="findNotesByNoteBookId" parameterType="string" resultType="Note">
+		select * 
+		from cn_note
+		where cn_notebook_id = #{cn_notebook_id} and
+			  cn_note_status_id = '0';
+	</select>
+	
+	<!-- 根据cn_notebook_id查找回收站Note -->
+	<select id="findRecNotes" parameterType="string" resultType="Note">
+		select * 
+		from cn_note
+		where cn_notebook_id = #{cn_notebook_id} and
+			  cn_note_status_id = '1';
+	</select>
+	
+	
+	<!-- 根据cn_note_id查找Note -->
+	<select id="findNoteById" parameterType="string" resultType="Note">
+		select * 
+		from cn_note
+		where cn_note_id = #{cn_note_id} and
+			  cn_note_status_id = '0';
+	</select>
+	
+	<!-- 根据Note实例修改该note -->
+	<update id="updateNote" parameterType="Note" >
+		update cn_note
+		<set>
+			<if test="cn_note_title != null">
+				cn_note_title = #{cn_note_title},
+			</if>
+			<if test="cn_note_body != null">
+				cn_note_body = #{cn_note_body}
+			</if>
+			<if test="cn_notebook_id != null">
+				cn_notebook_id = #{cn_notebook_id}
+			</if>
+			<if test="cn_note_status_id != null">
+				cn_note_status_id = #{cn_note_status_id}
+			</if>
+		</set>	
+			
+		where cn_note_id = #{cn_note_id} 
+	</update>
+	
+	<!-- 保存一条笔记 -->
+	<insert id="saveNote" parameterType="Note">
+		insert into cn_note
+		values( #{cn_note_id},
+				#{cn_notebook_id},
+				#{cn_user_id},
+				#{cn_note_status_id},
+				#{cn_note_type_id},
+				#{cn_note_title},
+				#{cn_note_body},
+				#{cn_note_create_time},
+				#{cn_note_last_modify_time}
+			   )
+	
+	</insert>
+	
+	<!-- 删除一条笔记 -->
+	<update id="deleteNote" parameterType="string">
+			delete from cn_note
+			where cn_note_id = #{id}
+	</update>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
